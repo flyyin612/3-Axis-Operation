@@ -44,8 +44,8 @@ uint8_t Three_Axis_Single_Byte_Read(uint8_t reg_addr)
 /*
 *@brief:Multiple Byte Read
 *@param:reg_addr  -- register addr
-*				*data_buf -- ¶ÁÈ¡µ½µÃÊı¾İ
-*				len       -- Êı¾İ³¤¶È
+*				*data_buf -- è¯»å–åˆ°å¾—æ•°æ®
+*				len       -- æ•°æ®é•¿åº¦
 *@retval:None
 */
 uint8_t Three_Axis_Multiple_Byte_Read(uint8_t reg_addr,uint8_t *data_buf,uint8_t len)
@@ -116,7 +116,7 @@ void Three_Axis_Single_Byte_Write(uint8_t reg_addr,uint8_t write_data)
 *@brief:Multiple Byte Write
 *@param:reg_addr    -- register addr
 *				*write_data -- write data
-*       len         -- Ğ´Êı¾İ³¤¶È
+*       len         -- å†™æ•°æ®é•¿åº¦
 *@retval:None
 */
 void Three_Axis_Multiple_Byte_Write(uint8_t reg_addr,uint8_t *write_data,uint8_t len)
@@ -142,37 +142,4 @@ void Three_Axis_Multiple_Byte_Write(uint8_t reg_addr,uint8_t *write_data,uint8_t
 	
 	i2c_Stop();
 }
-
-/*
-*@brief:
-*@param:None
-*@retval:None
-*/
-int Three_Axis_Read_Data(void)
-{
-	unsigned char    tmp_data[6] = {0};
-	int16_t x = 0;
-	int16_t y = 0;
-	int16_t z = 0;
-	
-	if (Three_Axis_Multiple_Byte_Read(OUT_X_MSB,tmp_data,6) != 0) {
-			return -1;
-	}
-	
- x = ((short)(tmp_data[1] << 8 | tmp_data[0]))>> 4;
- y = ((short)(tmp_data[3] << 8 | tmp_data[2]))>> 4;
- z = ((short)(tmp_data[5] << 8 | tmp_data[4]))>> 4;
-
-//		printf("tmp_data[0] = 0x%x",tmp_data[0]);
-//		printf("tmp_data[1] = 0x%x",tmp_data[1]);
-	accel_x = x;
-	accel_y = y;
-	accel_z = z;
-	
-	printf("oringal x y z is  %d %d %d",x,y,z); 
-	
-//	printf("abgle x y z is  %d %d %d",accel_x,accel_y,accel_z); 
-	return 0;
-}
-
 
